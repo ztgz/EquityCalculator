@@ -49,5 +49,12 @@ namespace RangeTests
             Assert.False(RangeUtils.IsValid("JT-J6o"));
             Assert.False(RangeUtils.IsValid("JTs-J9o"));
         }
+
+        [Fact]
+        public void SeveralCombinations()
+        {
+            Assert.True(RangeUtils.IsValid("AKs-ATs, QQ-TT, 76o-79o"));
+            Assert.False(RangeUtils.IsValid("AKs-ATs, QQ-TT, 75o-79o"));
+        }
     }
 }
