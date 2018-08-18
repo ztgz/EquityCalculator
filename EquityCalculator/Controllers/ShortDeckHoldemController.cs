@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Models.ViewModels;
@@ -10,7 +9,7 @@ namespace EquityCalculator.Controllers
     [ApiController]
     public class ShortDeckHoldemController : ControllerBase
     {
-        private IEquityService _equityService;
+        private readonly IEquityService _equityService;
         
         public ShortDeckHoldemController(IEquityService equityService)
         {
@@ -23,10 +22,10 @@ namespace EquityCalculator.Controllers
             string rangePos4, string rangePos5, string rangePos6, string rangePos7)
         {
             _Equities inputData = new _Equities();
-            inputData.range0 = "77-AA";
+            inputData.ranges.Add("AT");
 
-            (int statusCode, _Equities data) result = await _equityService.GetEquities(inputData);
-            return StatusCode(result.statusCode, result.data);
+            (int statusCode, _Equities data) = await _equityService.GetEquities(inputData);
+            return StatusCode(statusCode, data);
         }
     }
 }
