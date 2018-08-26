@@ -22,7 +22,7 @@ namespace EquityCalculator.Controllers
             string rangePos4, string rangePos5, string rangePos6, string rangePos7)
         {
             _Equities inputData = new _Equities();
-            inputData.Ranges.Add("ATs,AhTh");
+            inputData.Ranges.Add("QsTs");
             inputData.FlushBeatFullHouse = true;
             inputData.TripsBeatStaright  = false;
 

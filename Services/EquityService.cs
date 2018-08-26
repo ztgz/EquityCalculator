@@ -41,14 +41,14 @@ namespace Services
                 new List<_Card>() { }
             );
 
-        return (200, inputData);
+            return (200, inputData);
         }
 
         private void CalculateEquities(_Equities equities, IList<_Hand>[] hands, IList<_Board> boards)
         {
+            
             //byte[Player][The strength of players specific hand on this board]
             byte[][] handStrength = new byte[hands.Length][];
-
             IList<_Card> cards = new List<_Card>(_Board.BOARD_SIZE+_Hand.HAND_SIZE);
             //Foreach board calulate all the possible handstrengths 
             foreach (_Board board in boards)
@@ -71,7 +71,7 @@ namespace Services
             }
         }
 
-        private byte GetHandStrength(IList<_Card> cards, bool flushBeatFullHouse, bool tripsBeatStraight)
+        public byte GetHandStrength(IList<_Card> cards, bool flushBeatFullHouse, bool tripsBeatStraight)
         {
             bool isFlush = IsFlush(cards);
             if (isFlush && IsStraightFlush(cards))
@@ -123,7 +123,10 @@ namespace Services
 
             return HandStrength.Nothing;
         }
-        
+
+        #region HELPERS TO DETERMINE TYPE OF MADE HAND
+
+        //Returns true even if straight flush
         private bool IsFlush(IList<_Card> cards)
         {
             foreach (_Card.Suits suit in _Card.GetAllSuits())
@@ -155,6 +158,7 @@ namespace Services
             return false;
         }
 
+        //Returns true even straight flush
         private bool IsStraight(IList<_Card> cards)
         {
             //Ace works for lower straights
@@ -172,7 +176,7 @@ namespace Services
                 }
                 else
                 {
-                    if (b < _Deck.HIGHEST_CARD - SIZE_OF_MADE_HAND)
+                    if (b > _Deck.HIGHEST_CARD - SIZE_OF_MADE_HAND)
                     {
                         break;
                     }
@@ -182,7 +186,8 @@ namespace Services
  
             return false;
         }
-        
+
+        //Returns true even if royal flush
         private bool IsStraightFlush(IList<_Card> cards)
         {
             foreach (_Card.Suits suit in _Card.GetAllSuits())
@@ -230,6 +235,7 @@ namespace Services
             return false;
         }
 
+        //Returns true even if two pair
         private bool IsPair(IList<_Card> cards)
         {
             for (int i = 0; i < cards.Count - 1; i++)
@@ -274,5 +280,7 @@ namespace Services
             }
             return false;
         }
+
+    #endregion  
     } 
 }
