@@ -18,13 +18,15 @@ namespace EquityCalculator.Controllers
         
         [HttpGet]
         [Route("test")]
-        public async Task<IActionResult> GetEquitys(string rangePos0, string rangePos1, string rangePos2, string rangePos3,
+        public IActionResult GetEquitys(string rangePos0, string rangePos1, string rangePos2, string rangePos3,
             string rangePos4, string rangePos5, string rangePos6, string rangePos7)
         {
             _Equities inputData = new _Equities();
-            inputData.ranges.Add("AT");
+            inputData.Ranges.Add("ATs,AhTh");
+            inputData.FlushBeatFullHouse = true;
+            inputData.TripsBeatStaright  = false;
 
-            (int statusCode, _Equities data) = await _equityService.GetEquities(inputData);
+            (int statusCode, _Equities data) = _equityService.GetEquities(inputData);
             return StatusCode(statusCode, data);
         }
     }

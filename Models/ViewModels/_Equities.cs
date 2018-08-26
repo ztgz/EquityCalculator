@@ -6,13 +6,16 @@ namespace Models.ViewModels
     {
         private const int MAX_PLAYERS = 10;
 
-        public IList<string>  ranges   { get; set; }
-        public IList<decimal> equities { get; set; }
+        public IList<string>  Ranges   { get; set; }
+        public IList<decimal> Equities { get; set; }
+
+        public bool FlushBeatFullHouse { get; set; }
+        public bool TripsBeatStaright  { get; set; }
 
         public _Equities()
         {
-            ranges   = new List<string>(MAX_PLAYERS);
-            equities = new List<decimal>(MAX_PLAYERS);
+            Ranges   = new List<string>(MAX_PLAYERS);
+            Equities = new List<decimal>(MAX_PLAYERS);
         }
     }
 }

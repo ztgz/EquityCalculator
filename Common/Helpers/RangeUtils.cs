@@ -91,7 +91,7 @@ namespace Common.Helpers
             }
             else if (IsRangeWithSuitSpecified(combination))
             {
-                for (int i = ValueOfCard(combination[1]); i >= ValueOfCard(combination[5]); i--)
+                for (byte i = GetValueOfCard(combination[1]); i >= GetValueOfCard(combination[5]); i--)
                 {
                     hands.AddRange(GetHands(combination[0].ToString() + GetCardFromValue(i) + combination[2]));
                 }
@@ -134,12 +134,12 @@ namespace Common.Helpers
         #region HELPER METHODS FOR CARD VALUE
         private static bool HighestValueFirst(char firstCard, char secondCard)
         {
-            return ValueOfCard(firstCard) > ValueOfCard(secondCard);
+            return GetValueOfCard(firstCard) > GetValueOfCard(secondCard);
         }
 
-        private static int ValueOfCard(char card)
+        public static byte GetValueOfCard(char card)
         {
-            if (int.TryParse(card.ToString(), out int num))
+            if (byte.TryParse(card.ToString(), out var num))
             {
                 return num;
             }
@@ -165,13 +165,13 @@ namespace Common.Helpers
             }
         }
 
-        private static char GetCardFromValue(int value)
+        private static char GetCardFromValue(byte value)
         {
             if (value < 10)
             {
                 return value.ToString()[0];
             }
-            else if (value == 10)
+            if (value == 10)
             {
                 return 'T';
             }
@@ -196,8 +196,8 @@ namespace Common.Helpers
 
         private static string OrderHand(string comb)
         {
-            int valueFirst = ValueOfCard(comb[0]);
-            int valueSecond = ValueOfCard(comb[2]);
+            int valueFirst = GetValueOfCard(comb[0]);
+            int valueSecond = GetValueOfCard(comb[2]);
             if (valueFirst > valueSecond)
             {
                 return comb;

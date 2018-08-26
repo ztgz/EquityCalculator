@@ -15,25 +15,17 @@ namespace Services
         
         public IList<_Hand> GetHands(string range)
         {
-            Dictionary<_Hand, bool> hands = new Dictionary<_Hand, bool>();
             string[] combinations = range.Split(',');
+            Dictionary<string, _Hand> strHands = new Dictionary<string, _Hand>(); 
             foreach (var comb in combinations)
             {
-                foreach (_Hand hand in TransformCombinationToHands(comb))
+                foreach (var strHand in RangeUtils.GetHands(comb))
                 {
-                    hands.TryAdd(hand, true);
+                    strHands.TryAdd(strHand, new _Hand(strHand));
                 }
             }
 
-            return hands.Keys.ToList();
-        }
-
-        private IList<_Hand> TransformCombinationToHands(string combination)
-        {
-            IList<_Hand> hands = new List<_Hand>();
-            RangeUtils.GetHands(combination);
-
-            return hands;
+            return strHands.Values.ToList();
         }
     }
 }

@@ -1,24 +1,37 @@
-﻿namespace Models.ViewModels
+﻿using Common.Helpers;
+
+namespace Models.ViewModels
 {
     public class _Hand
     {
-        public class Card
-        {
-            public enum Suits
-            {
-                NONE     = 0,
-                HEARTS   = 1,
-                SPADES   = 2,
-                DIAMONDS = 3,
-                CLUBS    = 4
-            }
+        public const byte HAND_SIZE = 2;
 
-            public int   Value { get; set; }
-            public Suits Suit  { get; set; }
+        public _Card Card1 { get; set; }
+        public _Card Card2 { get; set; }
+
+        public _Hand(string combination)
+        {
+            Card1 = new _Card(combination.Substring(0,2));
+            Card2 = new _Card(combination.Substring(2,2));
         }
 
-        public Card Card1 { get; set; }
-        public Card Card2 { get; set; }
-        
+        public byte CardsOfSuit(_Card.Suits suit)
+        {
+            if (Card1.Suit == suit && Card2.Suit == suit)
+            {
+                return 2;
+            }
+            if (Card1.Suit != suit && Card2.Suit != suit)
+            {
+                return 1;
+            }
+
+            return 0;
+        }
+
+        public bool ContainsValue(byte value)
+        {
+            return Card1.Value == value || Card2.Value == value;
+        }
     }
 }
